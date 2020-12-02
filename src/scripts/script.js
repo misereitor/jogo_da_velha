@@ -2,7 +2,6 @@ const blocos = document.querySelectorAll('.bloco')
 const player = document.querySelector('.player')
 let run = true
 let playerGo =  true
-console.log(5%4)
 let valor =  [['','',''],['','',''],['','','']]
 blocos.forEach(bloco => {
     bloco.onclick = () => {
@@ -21,7 +20,6 @@ blocos.forEach(bloco => {
                 valor[(blocoValue - 1)%3 ][(Math.floor(blocoValue/3.1))]  = bloco.textContent
     
                 playerGo = !playerGo
-                console.table(valor)
             }
             for (let c = 0; c < valor.length; c++) {
                 if (valor[c][0] === valor[c][1] && valor[c][1] === valor[c][2] && valor[c][0] != '') {
@@ -32,6 +30,28 @@ blocos.forEach(bloco => {
                     player.innerHTML = `<p>Player ${valor[0][c]} Ganhou</p><button onclick="atualizar()">Jogar novamente</button>`  
                     run = false
                 } 
+            }
+            if (valor[0][0] === valor[1][1] && valor[1][1] === valor[2][2] && valor[1][1] != '') {
+                player.innerHTML = `<p>Player ${valor[0][0]} Ganhou</p><button onclick="atualizar()">Jogar novamente</button>`  
+                run = false
+            } else if (valor[0][2] === valor[1][1] && valor[1][1] === valor[2][0] && valor[1][1] != '') {
+                player.innerHTML = `<p>Player ${valor[0][2]} Ganhou</p><button onclick="atualizar()">Jogar novamente</button>`  
+                run = false
+            }
+            let validador = true
+            if (run) {
+                algo:for (let c = 0; c < 3; c++){
+                    for (let ci = 0; ci < 3; ci++){
+                        if (valor[c][ci] == ''){
+                            validador = false
+                            break algo
+                        }
+                    }
+                }
+                if (validador) {
+                    player.innerHTML = `<p>Deu velha</p><button onclick="atualizar()">Jogar novamente</button>`  
+                    run = false
+                }
             }
         }
     }
